@@ -9,7 +9,8 @@ function [fuser,mce,s,a,llh] = train_fusion(X,labels,prior)
 %           for each training example.
 %   prior: K-vector. Discrete probability distribution (positive, sums to 1)
 %          to weight examples in each class for the training objective
-%          function.
+%          function. If prior is omitted, or prior=[], then the prior 
+%          elements default to 1/K.
 %
 %  Outputs:
 %    fuser: function handle to perform fusion. Calling llh = fuser(Xtest)
