@@ -1,5 +1,27 @@
 function [fuser,mce,s,a,llh] = train_fusion(X,labels,prior)
-
+% Multiclass logistic regression fusion. Fuses M systems to recognize K
+% classes. 
+% Inputs:
+%   X: Training scores. Cell array with M elements. 
+%      X{i} is K-by-N and has the scores for each of K classes and each of
+%           N training examples.
+%   labels: N-vector, taking integer values in 1..K. Gives the correct class
+%           for each training example.
+%   prior: K-vector. Discrete probability distribution (positive, sums to 1)
+%          to weight examples in each class for the training objective
+%          function.
+%
+%  Outputs:
+%    fuser: function handle to perform fusion. Calling llh = fuser(Xtest)
+%           will fuse new test scores in Xtest, a cell array of M elements,
+%           each of which is a K-by-Ntest matrix. The output llh is
+%           K-by-Ntest fused scores, which act as calibrated class 
+%           log-likelihoods.
+%    mce: scalar. Optimal multiclass cross-entropy objective value obtained 
+%         during training.
+%    s: M-vector of fusion weights.
+%    a: K-vector of fusion offsets.
+%    llh: K-by-N fused training scores (calibrated class log-likelihoods).
 
 
     if exist('prior','var') && ~isempty(prior)
